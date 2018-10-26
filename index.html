@@ -35,6 +35,14 @@
             { year: 2018, value: 2.3}
         ];
 
+        function years(dataSet) {
+            return dataSet.reduce((accumulator, currentData) => {return accumulator.concat(currentData.year)},[])
+        }
+
+        function values(dataSet) {
+            return dataSet.reduce((accumulator, currentData) => {return accumulator.concat(currentData.value)},[])
+        }
+
         const margin = { top: 32, right: 24, bottom: 33, left: 24 },
               width = 698,
               height = 423;
@@ -43,7 +51,7 @@
                                      .attr('width', width)
                                      .attr('height', height)
                                      .append('g')
-                                        .attr('transform', `translate(${margin.left},${margin.top}`)
+                                        .attr('transform', `translate(${margin.left},${margin.top})`)
         
         const circles = svg.selectAll('circle')
                            .data(dataSetNewPort)
