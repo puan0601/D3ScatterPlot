@@ -14,17 +14,16 @@
             font-size: 13px;
             background-color: #ffffff;
         }
-
+        
+        .axis--x, .axis--y {
+            color: #c8c8c8;
+        }
         .axis--x path {
             display: none;
         }
 
         .axis--y path {
             display: none;
-        }
-
-        .circle {
-            padding-right: 5px;
         }
 
         .title {
@@ -69,15 +68,24 @@
                                      .attr('height', height + margin.top + margin.bottom)
                                      .append('g')
                                         .attr('transform', `translate(${margin.left},${margin.top})`)
-        
+        // Add title
         const title = svg.append('text')
                          .classed('title', true)
                          .attr('x', 0)
                          .attr('y', 0)
                          .text('Dividends')
+
+        // Add horizontal break line
+        const brLine = svg.append('line')
+                          .attr('x1', 0)
+                          .attr('y1', 8)
+                          .attr('x2', 650)
+                          .attr('y2', 8)
+                          .attr('stroke-width', 1)
+                          .attr('stroke', '#dcdcdc')
         
         // X and Y scales
-        const x = d3.scaleBand().rangeRound([0, width]).padding(0.3),
+        const x = d3.scaleBand().rangeRound([0, width]).padding(0.5),
               y = d3.scaleLinear().rangeRound([height, 0]);
 
         // Set domain for X and Y
@@ -89,13 +97,13 @@
         const yAxis = d3.axisLeft(y).ticks(4).tickFormat(d => d + '%');
 
         const g = svg.append('g')
-                     .attr('transform', `translate(${margin.left},${margin.top})`);   
+                     .attr('transform', `translate(${margin.left},${margin.top})`);
         
         // Add axes
         // x-axis
         g.append('g')
             .attr('class', 'axis axis--x')
-            .attr('transform', `translate(${-margin.left + -margin.right},${height-95})`)
+            .attr('transform', `translate(${-margin.left + -margin.right},${height - margin.top - margin.bottom})`)
             .call(xAxis)
 
         // y-axis
@@ -105,7 +113,7 @@
 
         // Add data circles
         // existing portfolio
-        svg.selectAll('.existing.dot')
+        g.selectAll('.existing.dot')
             .data(dataSetExistingPort)
             .enter()
             .append('circle')
@@ -116,7 +124,7 @@
             .style('fill', '#c6c9d9');
         
         // new portfolio
-        svg.selectAll('.existing.dot')
+        g.selectAll('.existing.dot')
             .data(dataSetNewPort)
             .enter()
             .append('circle')
