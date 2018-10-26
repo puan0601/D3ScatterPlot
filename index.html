@@ -57,7 +57,10 @@
                            .data(dataSetNewPort)
                            .enter()
                            .append('circle');
-
+        
+        const ordinalScale = d3.scaleOrdinal()
+                               .domain(years(dataSetExistingPort))
+                               .range(values(dataSetExistingPort));
         
         function render() {
 
