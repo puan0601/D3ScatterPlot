@@ -27,6 +27,10 @@
             padding-right: 5px;
         }
 
+        .title {
+            font-size: 18px
+        }
+
 
     </style>
 </head>
@@ -66,26 +70,32 @@
                                      .append('g')
                                         .attr('transform', `translate(${margin.left},${margin.top})`)
         
+        const title = svg.append('text')
+                         .classed('title', true)
+                         .attr('x', 0)
+                         .attr('y', 0)
+                         .text('Dividends')
+        
         // X and Y scales
-        const x = d3.scaleBand().rangeRound([0, width]).padding(0.5),
+        const x = d3.scaleBand().rangeRound([0, width]).padding(0.3),
               y = d3.scaleLinear().rangeRound([height, 0]);
 
         // Set domain for X and Y
         x.domain(years(dataSetExistingPort));
-        y.domain([0, Math.round(d3.max(values(dataSetNewPort)))]);
+        y.domain([0, Math.round(d3.max(values(dataSetNewPort)))]); 
         
         // Create X and Y axis
         const xAxis = d3.axisBottom(x);
-        const yAxis = d3.axisLeft(y).ticks(4, '%');
+        const yAxis = d3.axisLeft(y).ticks(4).tickFormat(d => d + '%');
 
         const g = svg.append('g')
                      .attr('transform', `translate(${margin.left},${margin.top})`);   
         
-        //Add axes
+        // Add axes
         // x-axis
         g.append('g')
             .attr('class', 'axis axis--x')
-            .attr('transform', `translate(-10,${height-20})`)
+            .attr('transform', `translate(${-margin.left + -margin.right},${height-95})`)
             .call(xAxis)
 
         // y-axis
@@ -93,6 +103,8 @@
             .attr('class', 'axis axis--y')
             .call(yAxis)       
 
+        // Add data circles
+        // existing portfolio
         svg.selectAll('.existing.dot')
             .data(dataSetExistingPort)
             .enter()
@@ -100,17 +112,18 @@
             .attr('class', 'existing')
             .attr('cx', (d) => { return x(d.year); })
             .attr('cy', (d) => { return y(d.value); })
-            .attr('r', 5)
-            .style('fill', '#263070');
+            .attr('r', 7)
+            .style('fill', '#c6c9d9');
         
-        svg.selectAll('.new.dot')
+        // new portfolio
+        svg.selectAll('.existing.dot')
             .data(dataSetNewPort)
             .enter()
             .append('circle')
             .attr('class', 'new')
             .attr('cx', (d) => { return x(d.year); })
             .attr('cy', (d) => { return y(d.value); })
-            .attr('r', 5)
+            .attr('r', 7)
             .style('fill', '#041370');
 
         function render() {
