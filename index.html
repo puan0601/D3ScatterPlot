@@ -1,44 +1,41 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Dividends</title>
-    <meta name="author" content="Anton Pugach">
-    <meta name="description" content="Responsive D3.JS chart component">
-    <meta name="keywords" content="d3.js, chart, responive">
-    <style type="text/css">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Dividends</title>
+        <meta name="author" content="Anton Pugach">
+        <meta name="description" content="Responsive D3.JS chart component">
+        <meta name="keywords" content="d3.js, chart, responive">
+        <!-- preloads AvenirNext font from fonts directory for initial render-->
+        <link rel="preload" href="fonts/InvescoInterstateCE-Regular_2924360604.otf" as="font">
+        <style type="text/css">
+            @font-face {
+                font-family: 'font';
+                src: url('fonts/InvescoInterstateCE-Regular_2924360604.otf')
+            }
 
-        @font-face {
-            font-family: 'AvenirNext';
-            src: url(fonts/InvescoInterstateCE-Regular_2924360604.otf)
-        }
-        
-        body {
-            font-family: "AvenirNext";
-            font-size: 13px;
-            background-color: #ffffff;
-        }
-        
-        .axis--x, .axis--y {
-            color: #c8c8c8;
-        }
-        .axis--x path {
-            display: none;
-        }
+            body {
+                font-family: 'font';
+                font-size: 13px;
+                background-color: #ffffff;
+            }
+            
+            .axis--x, .axis--y {
+                color: #c8c8c8;
+            }
 
-        .axis--y path {
-            display: none;
-        }
+            .axis line, .axis--x path, .axis--y path {
+                display: none;
+            }
 
-        .title {
-            font-size: 18px
-        }
+            .title {
+                font-size: 18px
+            }
 
-
-    </style>
-</head>
+        </style>
+    </head>
 
 <body>
     <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -111,11 +108,15 @@
             .attr('class', 'axis axis--x')
             .attr('transform', `translate(${-margin.left + -margin.right},${height - margin.top - margin.bottom})`)
             .call(xAxis)
+        
 
         // y-axis
         g.append('g')
             .attr('class', 'axis axis--y')
-            .call(yAxis)       
+            .call(yAxis) 
+
+        // removes first "0" tick on y-axis. first-child is path() so 2nd child is the tick to target for removal
+        d3.select('.axis--y .tick:nth-child(2)').remove();
 
         // Add data circles
         // existing portfolio
