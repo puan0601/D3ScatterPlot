@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>title</title>
+    <title>Dividends</title>
     <meta name="author" content="Anton Pugach">
     <meta name="description" content="Responsive D3.JS chart component">
     <meta name="keywords" content="d3.js, chart, responive">
@@ -44,12 +44,12 @@
         }
 
         const margin = { top: 32, right: 24, bottom: 33, left: 24 },
-              width = 698,
-              height = 423;
+              width = 698 - margin.left - margin.right,
+              height = 423 - margin.top - margin.bottom;
         
         const svg = d3.select('body').append('svg')
-                                     .attr('width', width)
-                                     .attr('height', height)
+                                     .attr('width', width + margin.left + margin.right)
+                                     .attr('height', height + margin.top + margin.bottom)
                                      .append('g')
                                         .attr('transform', `translate(${margin.left},${margin.top})`)
         
@@ -58,10 +58,30 @@
                            .enter()
                            .append('circle');
         
-        const ordinalScale = d3.scaleOrdinal()
-                               .domain(years(dataSetExistingPort))
-                               .range(values(dataSetExistingPort));
+        const x = d3.scaleBand().rangeRound([0, width]).padding(0.5),
+              y = d3.scaleLinear().rangeRound([height, 0]);
+
+        x.domain(years(dataSetNewPort));
+        y.domain([0, Math.round(d3.max(values(dataSetNewPort)))]);
+
+        const xAxis = d3.axisBottom(x);
+        const yAxis = d3.axisLeft(y).ticks(4, '%');;
+
+        const g = svg.append('g')
+                     .attr('transform', `translate(${margin.left},${margin.top})`);   
         
+        //Add axes
+        // x-axis
+        g.append('g')
+            .attr('class', 'axis axis--x')
+            .attr('transform', `translate(-10,${height-20})`)
+            .call(xAxis)
+
+        // y-axis
+        g.append('g')
+            .attr('class', 'axis axis--y')
+            .call(yAxis)       
+
         function render() {
 
         }
