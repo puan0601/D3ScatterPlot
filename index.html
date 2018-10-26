@@ -21,9 +21,36 @@
 <body>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script type="text/javascript">
+        const dataSetNewPort = [{
+            year: '2014', value: '1.4'
+        },{
+            year: '2015', value: '1.4'
+        },{
+            year: '2016', value: '3.8'
+        }];
+
+        const dataSetExistingPort = [{
+            year: '2014', value: '2.1'
+        },{
+            year: '2015', value: '2.9'
+        },{
+            year: '2016', value: null
+        },{
+            year: '2017', value: '1.1'
+        },{
+            year: '2018', value: '2.3'
+        }];
+
         const margin = { top: 32, right: 24, bottom: 33, left: 24 },
                 width = 698 - margin.left - margin.right,
                 height = 423 - margin.top - margin.bottom;
+        
+        const svg = d3.select('body').append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+            .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top}`)
+        
         function render() {
 
         }
