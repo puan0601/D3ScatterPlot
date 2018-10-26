@@ -13,8 +13,21 @@
             font-family: "AvenirNext";
             font-size: 13px;
             background-color: #ffffff;
-
         }
+
+        .axis--x path {
+            display: none;
+        }
+
+        .axis--y path {
+            display: none;
+        }
+
+        .circle {
+            padding-right: 5px;
+        }
+
+
     </style>
 </head>
 
@@ -23,7 +36,7 @@
     <script type="text/javascript">
         const dataSetNewPort = [
             { year: 2014, value: 1.4},
-            { year: 2015, value: 1.4},
+            { year: 2015, value: 2.4},
             { year: 2016, value: 3.8}
         ];
 
@@ -36,11 +49,11 @@
         ];
 
         function years(dataSet) {
-            return dataSet.reduce((accumulator, currentData) => {return accumulator.concat(currentData.year)},[])
+            return dataSet.reduce((accumulator, currentData) => { return accumulator.concat(currentData.year) },[])
         }
 
         function values(dataSet) {
-            return dataSet.reduce((accumulator, currentData) => {return accumulator.concat(currentData.value)},[])
+            return dataSet.reduce((accumulator, currentData) => { return accumulator.concat(currentData.value) },[])
         }
 
         const margin = { top: 32, right: 24, bottom: 33, left: 24 },
@@ -53,19 +66,17 @@
                                      .append('g')
                                         .attr('transform', `translate(${margin.left},${margin.top})`)
         
-        const circles = svg.selectAll('circle')
-                           .data(dataSetNewPort)
-                           .enter()
-                           .append('circle');
-        
+        // X and Y scales
         const x = d3.scaleBand().rangeRound([0, width]).padding(0.5),
               y = d3.scaleLinear().rangeRound([height, 0]);
 
-        x.domain(years(dataSetNewPort));
+        // Set domain for X and Y
+        x.domain(years(dataSetExistingPort));
         y.domain([0, Math.round(d3.max(values(dataSetNewPort)))]);
-
+        
+        // Create X and Y axis
         const xAxis = d3.axisBottom(x);
-        const yAxis = d3.axisLeft(y).ticks(4, '%');;
+        const yAxis = d3.axisLeft(y).ticks(4, '%');
 
         const g = svg.append('g')
                      .attr('transform', `translate(${margin.left},${margin.top})`);   
@@ -81,6 +92,26 @@
         g.append('g')
             .attr('class', 'axis axis--y')
             .call(yAxis)       
+
+        svg.selectAll('.existing.dot')
+            .data(dataSetExistingPort)
+            .enter()
+            .append('circle')
+            .attr('class', 'existing')
+            .attr('cx', (d) => { return x(d.year); })
+            .attr('cy', (d) => { return y(d.value); })
+            .attr('r', 5)
+            .style('fill', '#263070');
+        
+        svg.selectAll('.new.dot')
+            .data(dataSetNewPort)
+            .enter()
+            .append('circle')
+            .attr('class', 'new')
+            .attr('cx', (d) => { return x(d.year); })
+            .attr('cy', (d) => { return y(d.value); })
+            .attr('r', 5)
+            .style('fill', '#041370');
 
         function render() {
 
