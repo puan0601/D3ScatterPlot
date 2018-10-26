@@ -121,7 +121,7 @@
         // Add data circles
         // existing portfolio
         g.selectAll('.existing.dot')
-            .data(dataSetExistingPort)
+            .data(dataSetExistingPort.filter((d) => { return d.value != null }))
             .enter()
             .append('circle')
             .attr('class', 'existing')
@@ -131,8 +131,8 @@
             .style('fill', '#c6c9d9');
         
         // new portfolio
-        g.selectAll('.existing.dot')
-            .data(dataSetNewPort)
+        g.selectAll('.new.dot')
+            .data(dataSetNewPort.filter((d) => { return d.value != null }))
             .enter()
             .append('circle')
             .attr('class', 'new')
