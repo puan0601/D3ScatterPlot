@@ -13,7 +13,7 @@
         <style type="text/css">
             @font-face {
                 font-family: 'AvenirNext';
-                src: url('fonts/InvescoInterstateCE-Regular_2924360604.otf')
+                src: url('fonts/InvescoInterstateCE-Regular_2924360604.otf') format('opentype')
             }
 
             body {
@@ -76,6 +76,7 @@
               width = 698 - margin.left - margin.right,
               height = 423 - margin.top - margin.bottom;
         
+        // Add initial SVG for chartz
         const svg = d3.select('body').append('svg')
                                      .attr('width', width + margin.left + margin.right)
                                      .attr('height', height + margin.top + margin.bottom)
