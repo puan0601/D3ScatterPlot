@@ -92,15 +92,15 @@
         // Add horizontal break line
         const brLine = svg.append('line')
                           .attr('x1', 0)
-                          .attr('y1', 8)
+                          .attr('y1', 15)
                           .attr('x2', 650)
-                          .attr('y2', 8)
+                          .attr('y2', 15)
                           .attr('stroke-width', 1)
                           .attr('stroke', '#dcdcdc')
         
         // X and Y scales
         const x = d3.scaleBand().rangeRound([0, width + margin.left + margin.right]).padding(0.25),
-              y = d3.scaleLinear().rangeRound([height - margin.top - margin.bottom - 50, 0]);
+              y = d3.scaleLinear().rangeRound([height - margin.top - margin.bottom - 90, 0]);
 
         // Set domain for X and Y
         x.domain(years(dataSetExistingPort));
@@ -112,13 +112,13 @@
         
         // Create chart group
         const g = svg.append('g')
-                     .attr('transform', `translate(${margin.left},${margin.top})`);
+                     .attr('transform', `translate(${margin.left},${margin.top + 40})`);
         
         // Add axes
         // x-axis
         g.append('g')
             .attr('class', 'axis axis--x')
-            .attr('transform', `translate(${-margin.left + -margin.right},${height - margin.top - margin.bottom - 70})`)
+            .attr('transform', `translate(${-margin.left + -margin.right},${height - margin.top - margin.bottom - 100})`)
             .call(xAxis)
         
 
@@ -156,7 +156,7 @@
         // creates legend group
         const legend = svg.append('g')
                         .attr('class', 'legend')
-                        .attr('transform', `translate(0, ${height * .9})`);
+                        .attr('transform', `translate(0, ${height - 30})`);
 
         // adds 'new portfolio' circle to legend
         legend.append('circle')
