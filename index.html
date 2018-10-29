@@ -36,7 +36,7 @@
                 letter-spacing: 0.6px;
             }
 
-            .axis text {
+            .axis text, .legend {
                 letter-spacing: 0.4px;
             }
 
@@ -109,7 +109,8 @@
         // Create X and Y axis
         const xAxis = d3.axisBottom(x);
         const yAxis = d3.axisLeft(y).ticks(4).tickFormat(d => d + '%');
-
+        
+        // Create chart group
         const g = svg.append('g')
                      .attr('transform', `translate(${margin.left},${margin.top})`);
         
@@ -153,18 +154,37 @@
             .style('fill', '#041370');
 
         // creates legend group
-        const legend = svg.selectAll('.legend')
-                        .append('g')
+        const legend = svg.append('g')
                         .attr('class', 'legend')
-                        .attr('transform', `translate(0, 90)`);
-        
-        // adds circles to legend
+                        .attr('transform', `translate(0, ${height * .9})`);
+
+        // adds 'new portfolio' circle to legend
         legend.append('circle')
-              .attr('cx', '5')
-              .attr('cy', '5')
+              .attr('cx', 10)
+              .attr('cy', 5)
               .attr('r', 7)
               .attr('class', 'new')
               .style('fill', '#041370');
+        
+        // adds 'new portfolio' text to legend
+        legend.append('text')
+              .attr('x', 30)
+              .attr('y', 10)
+              .text('New Portfolio');
+
+        // adds 'existing portfolio' circle to legend
+        legend.append('circle')
+              .attr('cx', 160)
+              .attr('cy', 5)
+              .attr('r', 7)
+              .attr('class', 'existing')
+              .style('fill', '#c6c9d9');
+        
+        // adds 'existing portfolio' text to legend
+        legend.append('text')
+              .attr('x', 180)
+              .attr('y', 10)
+              .text('Existing Portfolio')
               
 
 
