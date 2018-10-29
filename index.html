@@ -43,7 +43,6 @@
             .axis--x text {
                 font-weight: 600;
             }
-
         </style>
     </head>
 
@@ -51,19 +50,20 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script type="text/javascript">
         const dataSetNewPort = [
-            { year: 2014, value: 1.4},
-            { year: 2015, value: 2.4},
-            { year: 2016, value: 3.8}
+            { year: 2014, value: 1.4 },
+            { year: 2015, value: 2.4 },
+            { year: 2016, value: 3.8 }
         ];
 
         const dataSetExistingPort = [
-            { year: 2014, value: 2.1},
-            { year: 2015, value: 2.9},
+            { year: 2014, value: 2.1 },
+            { year: 2015, value: 2.9 },
             { year: 2016, value: null },
-            { year: 2017, value: 1.1},
-            { year: 2018, value: 2.3}
+            { year: 2017, value: 1.1 },
+            { year: 2018, value: 2.3 }
         ];
 
+        // helper methods to return data in array form
         function years(dataSet) {
             return dataSet.reduce((accumulator, currentData) => { return accumulator.concat(currentData.year) },[])
         }
@@ -81,13 +81,13 @@
                                      .attr('width', width + margin.left + margin.right)
                                      .attr('height', height + margin.top + margin.bottom)
                                      .append('g')
-                                        .attr('transform', `translate(${margin.left},${margin.top})`)
+                                        .attr('transform', `translate(${margin.left},${margin.top})`);
         // Add title
         const title = svg.append('text')
-                         .classed('title', true)
+                         .attr('class', 'title')
                          .attr('x', 0)
                          .attr('y', 0)
-                         .text('Dividends')
+                         .text('Dividends');
 
         // Add horizontal break line
         const brLine = svg.append('line')
@@ -96,7 +96,7 @@
                           .attr('x2', 650)
                           .attr('y2', 15)
                           .attr('stroke-width', 1)
-                          .attr('stroke', '#dcdcdc')
+                          .attr('stroke', '#dcdcdc');
         
         // X and Y scales
         const x = d3.scaleBand().rangeRound([0, width + margin.left + margin.right]).padding(0.25),
@@ -119,15 +119,15 @@
         g.append('g')
             .attr('class', 'axis axis--x')
             .attr('transform', `translate(${-margin.left + -margin.right},${height - margin.top - margin.bottom - 100})`)
-            .call(xAxis)
+            .call(xAxis);
         
 
         // y-axis
         g.append('g')
             .attr('class', 'axis axis--y')
-            .call(yAxis) 
+            .call(yAxis);
 
-        // removes first "0" tick on y-axis. first-child is path() so 2nd child is the tick to target for removal
+        // Remove first "0" tick on y-axis. first-child is path() so 2nd child is the tick to target for removal
         d3.select('.axis--y .tick:nth-child(2)').remove();
 
         // Add data circles
@@ -153,12 +153,12 @@
             .attr('r', 7)
             .style('fill', '#041370');
 
-        // creates legend group
+        // Create legend group
         const legend = svg.append('g')
                         .attr('class', 'legend')
                         .attr('transform', `translate(0, ${height - 30})`);
 
-        // adds 'new portfolio' circle to legend
+        // Add 'new portfolio' circle to legend
         legend.append('circle')
               .attr('cx', 10)
               .attr('cy', 5)
@@ -166,32 +166,26 @@
               .attr('class', 'new')
               .style('fill', '#041370');
         
-        // adds 'new portfolio' text to legend
+        // Add 'new portfolio' text to legend
         legend.append('text')
               .attr('x', 30)
               .attr('y', 10)
-              .text('New Portfolio');
+              .text('New portfolio');
 
-        // adds 'existing portfolio' circle to legend
+        // Add 'existing portfolio' circle to legend
         legend.append('circle')
-              .attr('cx', 160)
+              .attr('cx', 165)
               .attr('cy', 5)
               .attr('r', 7)
               .attr('class', 'existing')
               .style('fill', '#c6c9d9');
         
-        // adds 'existing portfolio' text to legend
+        // Add 'existing portfolio' text to legend
         legend.append('text')
-              .attr('x', 180)
+              .attr('x', 185)
               .attr('y', 10)
-              .text('Existing Portfolio')
+              .text('Existing portfolio');
               
-
-
-        function render() {
-
-        }
-        window.onload = render;
     </script>
 </body>
 
