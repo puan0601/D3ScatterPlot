@@ -1,0 +1,1 @@
+This is my D3.JS V5 implementation of a scatter plot per specs provided. 
