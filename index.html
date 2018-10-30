@@ -140,7 +140,8 @@
             .attr('cx', (d) => { return x(d.year); })
             .attr('cy', (d) => { return y(d.value); })
             .attr('r', 7)
-            .style('fill', '#c6c9d9');
+            .style('fill', '#c6c9d9')
+            .attr('transform', `translate(10,0)`);
         
         // new portfolio
         g.selectAll('.new.dot')
@@ -151,7 +152,8 @@
             .attr('cx', (d) => { return x(d.year); })
             .attr('cy', (d) => { return y(d.value); })
             .attr('r', 7)
-            .style('fill', '#041370');
+            .style('fill', '#041370')
+            .attr('transform', `translate(-5, 0)`);
 
         // Create legend group
         const legend = svg.append('g')
